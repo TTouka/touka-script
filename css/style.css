@@ -1,0 +1,8 @@
+#sizeSlider {
+  width: 100%;
+}
+
+.result {
+  overflow: auto;
+  text-align: center;
+}

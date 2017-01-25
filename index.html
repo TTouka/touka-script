@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>東華文字</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>東華文字変換</h1>
+
+    <form>
+      <div class="form-group">
+        <label>変換するテキスト</label>
+        <textarea class="form-control" name="text"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>サイズ</label>
+        <input id="sizeSlider" data-slider-id="sizeSlider" type="text" data-slider-min="160" data-slider-max="320" data-slider-step="1" data-slider-value="160">
+      </div>
+
+      <div class="form-group">
+        <label>結果</label>
+        <button class="btn btn-success pull-right" id="save">保存</button>
+        <div class="result">
+          <div id="canvas"></div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+  <script src="js/touka.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
