@@ -1,0 +1,22 @@
+{
+  "name": "touka",
+  "authors": [
+    "Touka Tachibana <evhemary@gmail.com>"
+  ],
+  "description": "Tou-Ka script converter",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "seiyria-bootstrap-slider": "^9.7.0"
+  }
+}
