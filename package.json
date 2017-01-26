@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Tou-Ka script converter",
   "main": "",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "aws-sdk": "^2.8.0",
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.0",
     "gulp-webserver": "^0.9.1"
