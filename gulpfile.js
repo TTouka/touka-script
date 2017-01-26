@@ -49,10 +49,10 @@ gulp.task('publish', function() {
   var publisher = awspublish.create(params);
 
   gulp.src('./build/**/*')
-    // .pipe(awspublish.gzip({
-    //   ext: '.gz'
-    // }))
-    .pipe(publisher.publish())
+    .pipe(publisher.publish({
+      'Cache-Control': 'max-age=315360000, no-transform, public',
+    }))
     .pipe(publisher.sync('', [/^logs\//]))
+    .pipe(publisher.cache())
     .pipe(awspublish.reporter());
 });
