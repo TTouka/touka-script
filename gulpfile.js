@@ -36,7 +36,7 @@ gulp.task('build', ['clean'], function() {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('publish', function() {
+gulp.task('publish', ['publish-assets', 'publish-app'], function() {
   var params = {
     region: 'ap-northeast-1',
     params: {
@@ -48,11 +48,55 @@ gulp.task('publish', function() {
   };
   var publisher = awspublish.create(params);
 
-  gulp.src('./build/**/*')
+  return gulp.src(['build/**/*'])
     .pipe(publisher.publish({
       'Cache-Control': 'max-age=315360000, no-transform, public',
     }))
     .pipe(publisher.sync('', [/^logs\//]))
     .pipe(publisher.cache())
+    .pipe(awspublish.reporter());
+});
+
+gulp.task('publish-app', function() {
+  var params = {
+    region: 'ap-northeast-1',
+    params: {
+      Bucket: 'touka.kagu.la',
+    },
+    credentials: new AWS.SharedIniFileCredentials({
+      profile: 'touka-publish'
+    }),
+  };
+  var publisher = awspublish.create(params);
+
+  return gulp.src([
+      'build/**/*',
+      '!build/bower_components/**',
+      '!build/img/**'
+    ])
+    .pipe(publisher.publish({
+      'Cache-Control': 'max-age=315360000, no-transform, public',
+    }, {
+      force: true
+    }))
+    .pipe(awspublish.reporter());
+});
+
+gulp.task('publish-assets', function() {
+  var params = {
+    region: 'ap-northeast-1',
+    params: {
+      Bucket: 'touka.kagu.la',
+    },
+    credentials: new AWS.SharedIniFileCredentials({
+      profile: 'touka-publish'
+    }),
+  };
+  var publisher = awspublish.create(params);
+
+  return gulp.src('build/**/*')
+    .pipe(publisher.publish({
+      'Cache-Control': 'max-age=315360000, no-transform, public',
+    }))
     .pipe(awspublish.reporter());
 });
