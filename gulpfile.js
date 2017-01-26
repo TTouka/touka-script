@@ -48,10 +48,10 @@ gulp.task('publish', function() {
   };
   var publisher = awspublish.create(params);
 
-  gulp.src('./build/*')
-    .pipe(awspublish.gzip({
-      ext: '.gz'
-    }))
+  gulp.src('./build/**/*')
+    // .pipe(awspublish.gzip({
+    //   ext: '.gz'
+    // }))
     .pipe(publisher.publish())
     .pipe(publisher.sync('', [/^logs\//]))
     .pipe(awspublish.reporter());
