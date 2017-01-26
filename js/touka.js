@@ -10,7 +10,7 @@ function Touka(options) {
         'い': 'i.png',
         'う': 'u.png',
         'え': 'e.png',
-        'お': 'a.png',
+        'お': 'o.png',
         'か': 'ka.png',
         'き': 'ki.png',
         'く': 'ku.png',
