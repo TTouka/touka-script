@@ -1,9 +1,18 @@
 function Touka(options) {
     this.text = '';
     this.lines = [];
-    this.charSize = 320 / 2;
-    this.charWidth = 320 / 2;
-    this.charHeight = 370 / 2;
+
+    this.srcSize = {
+      h: 320,
+      w: 370,
+    };
+
+    this.outSize = {
+      h: undefined,
+      w: undefined,
+    };
+
+    this.aspectRatio = 370 / 320;
 
     this.kanas = {
         'あ': 'a.png',
@@ -83,38 +92,32 @@ function Touka(options) {
         'ゔ': 'vu.png',
     };
 
-    this.init(options);
+    this.initCanvas(options);
+    this.changeSize(320 / 2);
 }
 
-Touka.prototype.init = function(options) {
+Touka.prototype.initCanvas = function(options) {
     this.target = document.querySelector(options.target);
     this.canvas = document.createElement('canvas');
     this.target.appendChild(this.canvas);
-    this.changeSize(this.charSize);
-    this.updateText('とうかもじ');
 };
 
-Touka.prototype.changeSize = function(size) {
-    this.charSize = size;
-    this.charHeight = this.charSize;
-    this.charWidth = Math.round(this.charHeight * 370 / 320);
-
-    this.draw();
+Touka.prototype.changeSize = function(height) {
+    this.outSize.h = height;
+    this.outSize.w = Math.round(height * this.aspectRatio);
 };
 
-Touka.prototype.updateText = function(text) {
+Touka.prototype.changeText = function(text) {
     this.text = text;
-    this.lines = text.split(/[\n\r]+/);
+    this.lines = text.split(/\r\n|\r|\n/);
     this.maxLength = Math.max.apply(null, this.lines.map(function(line) {
         return line.length;
     }));
-
-    this.draw();
 };
 
 Touka.prototype.draw = function() {
-    this.canvas.width = this.charWidth * this.lines.length;
-    this.canvas.height = this.charHeight * this.maxLength;
+    this.canvas.width = this.outSize.w * this.lines.length;
+    this.canvas.height = this.outSize.h * this.maxLength;
 
     this.lines.forEach(function(line, i) {
         this.drawLine(line, i);
@@ -128,21 +131,23 @@ Touka.prototype.drawLine = function(text, row) {
 };
 
 Touka.prototype.drawChar = function(char, line, charNum) {
-    var charWidth = this.charWidth;
-    var charHeight = this.charHeight;
-    var x = (this.lines.length - line - 1) * this.charWidth;
-    var y = charNum * this.charHeight;
+    var x = (this.lines.length - line - 1) * this.outSize.w;
+    var y = charNum * this.outSize.h;
     var ctx = this.canvas.getContext('2d');
 
     var img = new Image();
     try {
         img.src = '/img/char/' + this.pickImage(char);
-        img.onload = function() {
-            ctx.drawImage(img, x, y, charWidth, charHeight);
-        };
+        img.onload = this.drawImage(ctx, img, x, y);
     } catch (e) {
         console.log(e);
     }
+};
+
+Touka.prototype.drawImage = function(ctx, img, x, y) {
+    return (function() {
+        ctx.drawImage(img, x, y, this.outSize.w, this.outSize.h);
+    }).bind(this);
 };
 
 Touka.prototype.pickImage = function(char) {
