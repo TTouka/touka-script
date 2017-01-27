@@ -17,6 +17,14 @@ $(function() {
     t.exportAsImage();
   });
 
-  t.changeText('とうかもじ');
+  var samples = [
+    'とうかもじ',
+    'ろうろうこ',
+    'びがびょう',
+  ];
+
+  var idx = Math.floor(Math.random() * samples.length);
+
+  t.changeText(samples[idx]);
   t.draw();
 });
