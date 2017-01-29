@@ -12,6 +12,9 @@ function Touka(options) {
     w: undefined,
   };
 
+  this.charDir = 'ttb';
+  this.lineDir = 'rtl';
+
   this.aspectRatio = 370 / 320;
 
   this.kanas = {
@@ -107,6 +110,14 @@ Touka.prototype.changeSize = function(height) {
   this.outSize.w = Math.round(height * this.aspectRatio);
 };
 
+Touka.prototype.changeCharDir = function(dir) {
+  this.charDir = dir;
+};
+
+Touka.prototype.changeLineDir = function(dir) {
+  this.lineDir = dir;
+};
+
 Touka.prototype.changeText = function(text) {
   this.text = text;
   this.lines = text.split(/\r\n|\r|\n/);
@@ -115,9 +126,26 @@ Touka.prototype.changeText = function(text) {
   }));
 };
 
+Touka.prototype.isVertical = function() {
+  return this.charDir === 'ttb' || this.charDir === 'btt';
+};
+
+Touka.prototype.isReverseCharDir = function() {
+  return this.charDir === 'rtl' || this.charDir === 'btt';
+};
+
+Touka.prototype.isReverseLineDir = function() {
+  return this.lineDir === 'btt' || this.lineDir === 'ltr';
+};
+
 Touka.prototype.draw = function() {
-  this.canvas.width = this.outSize.w * this.lines.length;
-  this.canvas.height = this.outSize.h * this.maxLength;
+  if (this.isVertical()) {
+    this.canvas.width = this.outSize.w * this.lines.length;
+    this.canvas.height = this.outSize.h * this.maxLength;
+  } else {
+    this.canvas.width = this.outSize.w * this.maxLength;
+    this.canvas.height = this.outSize.h * this.lines.length;
+  }
 
   this.lines.forEach(function(line, i) {
     this.drawLine(line, i);
@@ -130,9 +158,27 @@ Touka.prototype.drawLine = function(text, row) {
   }
 };
 
-Touka.prototype.drawChar = function(char, line, charNum) {
-  var x = (this.lines.length - line - 1) * this.outSize.w;
-  var y = charNum * this.outSize.h;
+Touka.prototype.drawChar = function(char, lineNum, charNum) {
+  var x, y;
+  if (this.isVertical()) {
+    x = lineNum * this.outSize.w;
+    y = charNum * this.outSize.h;
+    if (this.lineDir === 'rtl') {
+      x = (this.lines.length - lineNum - 1) * this.outSize.w;
+    }
+    if (this.charDir === 'btt') {
+      y = (this.maxLength - charNum - 1) * this.outSize.h;
+    }
+  } else {
+    x = charNum * this.outSize.w;
+    y = lineNum * this.outSize.h;
+    if (this.charDir === 'rtl') {
+      x = (this.maxLength - charNum - 1) * this.outSize.w;
+    }
+    if (this.lineDir === 'btt') {
+      y = (this.lines.length - lineNum - 1) * this.outSize.h;
+    }
+  }
   var ctx = this.canvas.getContext('2d');
 
   var img = new Image();

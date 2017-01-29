@@ -25,6 +25,42 @@
         <input id="sizeSlider" data-slider-id="sizeSlider" type="text" data-slider-min="160" data-slider-max="320" data-slider-step="1" data-slider-value="160">
       </div>
       <div class="form-group">
+        <label>文字の方向</label>
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary active">
+            <input type="radio" name="charDir" autocomplete="off" value="ttb" checked><i class="glyphicon glyphicon-arrow-down"></i>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="charDir" autocomplete="off" value="ltr"><i class="glyphicon glyphicon-arrow-right"></i>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="charDir" autocomplete="off" value="btt"><i class="glyphicon glyphicon-arrow-up"></i>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="charDir" autocomplete="off" value="rtl"><i class="glyphicon glyphicon-arrow-left"></i>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>改行の方向</label>
+        <div class="btn-group for-h" data-toggle="buttons">
+          <label class="btn btn-primary">
+            <input type="radio" name="lineDir" autocomplete="off" value="ttb"><i class="glyphicon glyphicon-arrow-down"></i>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="lineDir" autocomplete="off" value="btt"><i class="glyphicon glyphicon-arrow-up"></i>
+          </label>
+        </div>
+        <div class="btn-group for-v" data-toggle="buttons">
+          <label class="btn btn-primary active">
+            <input type="radio" name="lineDir" autocomplete="off" value="ltr" checked><i class="glyphicon glyphicon-arrow-right"></i>
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="lineDir" autocomplete="off" value="rtl"><i class="glyphicon glyphicon-arrow-left"></i>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
         <label>結果</label>
         <button class="btn btn-success pull-right" id="save">保存</button>
       </div>
