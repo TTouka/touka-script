@@ -52,6 +52,6 @@ $(function() {
 
   var idx = Math.floor(Math.random() * samples.length);
 
-  t.changeText(samples[idx] + '\n' + samples[Math.floor(Math.random() * samples.length)]);
+  t.changeText(samples[idx]);
   t.draw();
 });
