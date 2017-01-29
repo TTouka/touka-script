@@ -22,6 +22,9 @@ gulp.task('build', ['clean'], function() {
       [
         'bower_components/**/*.js',
         'bower_components/**/*.css',
+        'bower_components/**/*.woff2',
+        'bower_components/**/*.woff',
+        'bower_components/**/*.ttf',
         'css/**/*.css',
         'js/**/*.js',
         'index.html',
